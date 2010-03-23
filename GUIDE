@@ -1,0 +1,5 @@
+1. Create an account at www.wordpress.com
+2. You should get a domain similar to "http://keepcontest.wordpress.com/"
+3. Insert that domain at wordpress.model.constants.Wordpress.XML_RPC_SERVER
+4. Insert your user name and password in Main.java
+5. RUN!
