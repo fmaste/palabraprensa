@@ -2,4 +2,6 @@
 2. You should get a domain similar to "http://keepcontest.wordpress.com/"
 3. Insert that domain at wordpress.model.constants.Wordpress.XML_RPC_SERVER
 4. Insert your user name and password in Main.java
+5. Log in to wordpress.com with user and pass. Go to Settingg->Discussion
+	- Check the 'An administrator must always approve the comment ' checkbox and Save Settings
 5. RUN!

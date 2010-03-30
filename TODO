@@ -1,0 +1,12 @@
+* Dado el nombre de un usuario, obtener todos sus videos/blogs.											OK
+
+* Dado un elemento (video o blog), obtener todos los comentarios desde tal fecha en adelante.
+	- No se puede filtrar por fecha. Lo que se hizo es poner todos los comentarios on hold
+	y traer solo aquellos que estan en ese estado. Luego, se pueden aceptar o rechazar los comentarios	OK
+
+* Poder eliminar un comentario determinado.																
+	- En realidad se edita el comentario que estaba on hold												OK
+
+* Obtener el nombre del autor del comentario.															OK
+
+* Obtener la URL contextual del comentario (la url de la pagina del video o del blog).					OK

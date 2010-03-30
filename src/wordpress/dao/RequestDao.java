@@ -29,4 +29,19 @@ public class RequestDao {
 	    
 	    return (Object[]) client.execute(request.getMethod(), request.getParams());
 	}
+	
+	public static Boolean makeRequest(Request request, boolean booleanAnswer) throws Exception {
+		
+		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
+	    config.setServerURL(new URL(Wordpress.XML_RPC_SERVER));
+	    XmlRpcClient client = new XmlRpcClient();
+	    client.setConfig(config);
+	    
+	    if(booleanAnswer) {
+	    	return (Boolean) client.execute(request.getMethod(), request.getParams());
+	    } else {
+	    	return null;
+	    }
+	    
+	}
 }
