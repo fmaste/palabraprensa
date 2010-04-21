@@ -2,7 +2,7 @@ package wordpress.factory;
 
 import wordpress.model.Request;
 
-public class Requestfactory {
+public class RequestFactory {
 
 	public static Request create(String method, Object[] params) {
 		if (method == null || params == null) {
