@@ -1,10 +1,11 @@
-package wordpress.factory;
+package palabraprensa.factory;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import wordpress.model.Comment;
+import palabraprensa.model.Comment;
+
 
 public class CommentFactory {
 	

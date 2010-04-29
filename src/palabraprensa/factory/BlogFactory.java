@@ -1,8 +1,9 @@
-package wordpress.factory;
+package palabraprensa.factory;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import wordpress.model.Blog;
+
+import palabraprensa.model.Blog;
 
 public class BlogFactory {
 	private static final String BLOG_NAME = "blogName";
@@ -21,8 +22,8 @@ public class BlogFactory {
 		blog.setAdmin(AdminFactory.create(userName, userPass));
 		blog.setIsAdmin(isAdmin);
 		blog.setUrl(url);
-		blog.setBlogId(blogId);
-		blog.setBlogName(blogName);
+		blog.setId(blogId);
+		blog.setName(blogName);
 		blog.setXmlrpcUrl(xmlrpcUrl);
 		return blog;
 	}

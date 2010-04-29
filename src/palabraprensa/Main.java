@@ -1,23 +1,11 @@
-package wordpress;
+package palabraprensa;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-
-import wordpress.dao.BlogDao;
-import wordpress.dao.CommentDao;
-import wordpress.dao.RequestDao;
-import wordpress.factory.RequestFactory;
-import wordpress.model.Blog;
-import wordpress.model.Comment;
-import wordpress.model.Request;
-import wordpress.model.constants.Wordpress;
+import palabraprensa.dao.BlogDao;
+import palabraprensa.dao.CommentDao;
+import palabraprensa.model.Blog;
+import palabraprensa.model.Comment;
+import palabraprensa.model.constants.Wordpress;
 
 public class Main {
 	

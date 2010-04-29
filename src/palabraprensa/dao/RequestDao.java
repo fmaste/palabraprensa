@@ -1,10 +1,11 @@
-package wordpress.dao;
+package palabraprensa.dao;
 
 import java.net.URL;
 import org.apache.xmlrpc.client.XmlRpcClient;
 import org.apache.xmlrpc.client.XmlRpcClientConfigImpl;
-import wordpress.model.Request;
-import wordpress.model.constants.Wordpress;
+
+import palabraprensa.model.Request;
+import palabraprensa.model.constants.Wordpress;
 
 public class RequestDao {
 	

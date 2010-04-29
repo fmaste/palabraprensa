@@ -1,6 +1,6 @@
-package wordpress.factory;
+package palabraprensa.factory;
 
-import wordpress.model.Admin;
+import palabraprensa.model.Admin;
 
 public class AdminFactory {
 
@@ -10,8 +10,8 @@ public class AdminFactory {
 			return null;
 		}
 		Admin admin = new Admin();
-		admin.setUserName(userName);
-		admin.setUserPass(userPass);
+		admin.setName(userName);
+		admin.setPass(userPass);
 		return admin;
 	}
 

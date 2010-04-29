@@ -1,6 +1,6 @@
-package wordpress.factory;
+package palabraprensa.factory;
 
-import wordpress.model.Request;
+import palabraprensa.model.Request;
 
 public class RequestFactory {
 

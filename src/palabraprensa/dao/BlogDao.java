@@ -1,13 +1,14 @@
-package wordpress.dao;
+package palabraprensa.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import wordpress.factory.BlogFactory;
-import wordpress.factory.RequestFactory;
-import wordpress.model.Blog;
-import wordpress.model.Request;
-import wordpress.model.constants.Wordpress;
+
+import palabraprensa.factory.BlogFactory;
+import palabraprensa.factory.RequestFactory;
+import palabraprensa.model.Blog;
+import palabraprensa.model.Request;
+import palabraprensa.model.constants.Wordpress;
 
 public class BlogDao {
 
@@ -17,7 +18,7 @@ public class BlogDao {
 		Request request = RequestFactory.create(Wordpress.GET_USERS_BLOGS, params);
 		Object[] results = RequestDao.makeRequest(request);		
 		List<Blog> blogs = new ArrayList<Blog>();	    
-		for (int index=0; index < results.length ; index ++) {
+		for (int index = 0; index < results.length; index ++) {
 			if (results[index] instanceof HashMap<?,?>) {
 				HashMap<String, Object> map = (HashMap<String, Object>) results[index];
 				// Create a blog and add it to answer

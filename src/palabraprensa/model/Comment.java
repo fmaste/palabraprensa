@@ -1,4 +1,4 @@
-package wordpress.model;
+package palabraprensa.model;
 
 import java.util.Date;
 

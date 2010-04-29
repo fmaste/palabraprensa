@@ -1,12 +1,13 @@
-package wordpress.dao;
+package palabraprensa.dao;
 
 import java.util.HashMap;
-import wordpress.factory.CommentFactory;
-import wordpress.factory.RequestFactory;
-import wordpress.model.Blog;
-import wordpress.model.Comment;
-import wordpress.model.Request;
-import wordpress.model.constants.Wordpress;
+
+import palabraprensa.factory.CommentFactory;
+import palabraprensa.factory.RequestFactory;
+import palabraprensa.model.Blog;
+import palabraprensa.model.Comment;
+import palabraprensa.model.Request;
+import palabraprensa.model.constants.Wordpress;
 
 public class CommentDao {
 
@@ -17,7 +18,7 @@ public class CommentDao {
 		// Status defaults to approve
 		// If you don't provide a filter['number'] value then it will limit the response to 10
 		map.put("number", new Integer(200));
-		Object[] params = new Object[]{new Integer(blog.getBlogId()), new String(blog.getAdmin().getUserName()), new String(blog.getAdmin().getUserPass()), map};
+		Object[] params = new Object[]{new Integer(blog.getId()), new String(blog.getAdmin().getName()), new String(blog.getAdmin().getPass()), map};
 		Request request = RequestFactory.create(Wordpress.GET_COMMENTS, params);		
 		return getComments(request);
 	}
@@ -27,7 +28,7 @@ public class CommentDao {
 		map.put("status", "hold");
 		// If you don't provide a filter['number'] value then it will limit the response to 10
 		map.put("number", new Integer(200));
-		Object[] params = new Object[]{new Integer(blog.getBlogId()), new String(blog.getAdmin().getUserName()), new String(blog.getAdmin().getUserPass()), map};
+		Object[] params = new Object[]{new Integer(blog.getId()), new String(blog.getAdmin().getName()), new String(blog.getAdmin().getPass()), map};
 		Request request = RequestFactory.create(Wordpress.GET_COMMENTS, params);		
 		return getComments(request);
 	}
@@ -62,7 +63,7 @@ public class CommentDao {
 		map.put("author", comment.getAuthor());
 		map.put("author_url", comment.getAuthorUrl());
 		map.put("author_email", comment.getAuthorEmail());
-		Object[] params = new Object[]{new Integer(blog.getBlogId()), new String(blog.getAdmin().getUserName()), new String(blog.getAdmin().getUserPass()),new Integer(comment.getCommentId()), map};
+		Object[] params = new Object[]{new Integer(blog.getId()), new String(blog.getAdmin().getName()), new String(blog.getAdmin().getPass()),new Integer(comment.getCommentId()), map};
 		Request request = RequestFactory.create(Wordpress.EDIT_COMMENT, params);		
 		return RequestDao.makeBooleanRequest(request);
 	}

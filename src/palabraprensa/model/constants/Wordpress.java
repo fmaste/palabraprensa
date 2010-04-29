@@ -1,4 +1,4 @@
-package wordpress.model.constants;
+package palabraprensa.model.constants;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
