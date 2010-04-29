@@ -5,59 +5,60 @@ import palabraprensa.dao.BlogDao;
 import palabraprensa.dao.CommentDao;
 import palabraprensa.model.Blog;
 import palabraprensa.model.Comment;
-import palabraprensa.model.constants.Wordpress;
+import palabraprensa.model.User;
 
 public class Main {
+	public static final String WP_USER_NAME = "keepcontest";
+	public static final String WP_PASS_PASS = "password";
+	// Suppose all comments are or aren't rejected (testing)
+	public static final boolean REJECT_ALL = true;
 	
-	/**
-	 * @param args
-	 * @throws InterruptedException 
-	 */
-	public static void main(String[] args) throws InterruptedException {
-		
-		while(true) {
-			
-		try {
-			
-			// First, get User blogs				
-			List<Blog> blogs = BlogDao.getBlogsOwned(Wordpress.USER_NAME, Wordpress.USER_PASS);
-			
-			// SUPPOSE ALL COMMENTS ARE REJECTED (TESTING)
-			boolean rejected = true;
-			
-			// Get comments for each blog in which the user is admin
-			for(Blog blog : blogs) {
-				if (blog != null) {
-					//Comment[] comments = CommentDao.getComments(blog);
-					//Comment[] comments = CommentDao.getCommentsSince(blog, Wordpress.getDateFromXDaysAgo(1));
-					Comment[] comments = CommentDao.getCommentsApproved(blog);
-					for(int i = 0; i < comments.length; i++) {
-						if (comments[i] != null) {
-							System.out.println("THIS MESSAGES SHOULD BE SENT TO KEEPCON PLATFORM:");
-							System.out.println(comments[i]);
-							System.out.println("SUPPOSE THEY ARE ALL REJECTED");
-							if (rejected) {
-								if (CommentDao.setCommentSpam(blog, comments[i])) {
-									System.out.println("Comment: " + comments[i].getContent() + " succesfully deleted");
-								} else {
-									System.out.println("There was an error deleting the comment: " + comments[i].getContent());
-								}
-							} else {
-								if (CommentDao.setCommentApproved(blog, comments[i])) {
-									System.out.println("Comment: " + comments[i].getContent() + " succesfully approved");
-								} else {
-									System.out.println("There was an error approving the comment: " + comments[i].getContent());
-								}
-							}
-						}
+	public static void main(String[] args) throws Exception {
+		// Create the user
+		User user = new User();
+		user.setName(WP_USER_NAME);
+		user.setPass(WP_PASS_PASS);
+		// Get the blogs where the user is admin				
+		List<Blog> blogs = BlogDao.getBlogsOwned(user);
+		if (blogs == null || blogs.isEmpty()) {
+			System.out.println("User has no blogs!");
+		} else {
+			while (true) {
+				// Get comments for each blog in which the user is admin
+				for(Blog blog : blogs) {
+					if (blog != null) {
+						moderateBlog(user, blog);
+					}
+				}
+				// Wait 4 seconds and retry!
+				Thread.sleep(4000);
+			}
+		}
+	}
+	
+	public static void moderateBlog(User user, Blog blog) throws Exception {
+		List<Comment> comments = CommentDao.getCommentsApproved(user, blog);
+		for(Comment comment : comments) {
+			if (comment != null) {
+				System.out.println("THIS MESSAGE SHOULD BE SENT TO KEEPCON PLATFORM:");
+				System.out.println(comment);
+				if (REJECT_ALL) {
+					System.out.println("SUPPOSE THEY ARE ALL REJECTED");
+					if (CommentDao.setCommentSpam(user, blog, comment)) {
+						System.out.println("Comment " + comment.getId() + " succesfully deleted.");
+					} else {
+						System.out.println("There was an error deleting comment " + comment.getId() + ".");
+					}
+				} else {
+					System.out.println("SUPPOSE THEY ARE ALL OK");
+					if (CommentDao.setCommentApproved(user, blog, comment)) {
+						System.out.println("Comment " + comment.getId() + " succesfully approved.");
+					} else {
+						System.out.println("There was an error approving comment " + comment.getId() + ".");
 					}
 				}
 			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		Thread.sleep(4000);
-		}
+		}	
 	}
+	
 }

@@ -3,37 +3,34 @@ package palabraprensa.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import palabraprensa.factory.BlogFactory;
-import palabraprensa.factory.RequestFactory;
 import palabraprensa.model.Blog;
-import palabraprensa.model.Request;
+import palabraprensa.model.User;
 import palabraprensa.model.constants.Wordpress;
+import palabraprensa.xmlrpc.Request;
 
 public class BlogDao {
 
 	@SuppressWarnings("unchecked")
-	public static List<Blog> getBlogs(String userName, String userPass) throws Exception {		
-		Object[] params = new Object[]{new String(userName), new String(userPass)};
-		Request request = RequestFactory.create(Wordpress.GET_USERS_BLOGS, params);
-		Object[] results = RequestDao.makeRequest(request);		
-		List<Blog> blogs = new ArrayList<Blog>();	    
-		for (int index = 0; index < results.length; index ++) {
-			if (results[index] instanceof HashMap<?,?>) {
-				HashMap<String, Object> map = (HashMap<String, Object>) results[index];
-				// Create a blog and add it to answer
-				blogs.add( BlogFactory.create(userName, userPass, map) );
-			}
+	public static List<Blog> getBlogsOwned(User user) throws Exception {		
+		String method = Wordpress.GET_USERS_BLOGS;
+		Object[] params = new Object[]{new String(user.getName()), new String(user.getPass())};
+		Object result = Request.make(user, method, params);
+		if (!(result instanceof Object[])) {
+			// TODO: Log!!!
+			return null;
 		}
-		return blogs;
-	}
-	
-	public static List<Blog> getBlogsOwned(String userName, String userPass) throws Exception {				
-		List<Blog> ans = new ArrayList<Blog>();
-		List<Blog> blogs = getBlogs(userName, userPass);
-		for (Blog blog : blogs) {
-			if (blog.getIsAdmin()) {
-				ans.add(blog);
+		Object[] blogs = (Object[]) result;
+		List<Blog> ans = new ArrayList<Blog>();	    
+		for (int index = 0; index < blogs.length; index++) {
+			if (blogs[index] instanceof HashMap<?,?>) {
+				HashMap<String, Object> map = (HashMap<String, Object>) blogs[index];
+				Blog blog = BlogFactory.createIfAdmin(map);
+				if (blog != null) {
+					ans.add(blog);
+				}
+			} else {
+				// TODO: Log!
 			}
 		}
 		return ans;

@@ -12,24 +12,20 @@ public class BlogFactory {
 	private static final String IS_ADMIN = "isAdmin";
 	private static final String URL = "url";
 
-	public static Blog create(String userName, String userPass, Boolean isAdmin, String url, Integer blogId, String blogName, String xmlrpcUrl) {		
-		if (userName == null || userPass == null ||
-				isAdmin == null || url == null || blogId == null || 
-				blogName == null || xmlrpcUrl == null) {
+	public static Blog create(Integer id, String name, String url, String xmlrpcUrl) {		
+		// TODO: Let name, url and xmlrpcUrl be empty strings ?
+		if (id == null || name == null || url == null || xmlrpcUrl == null) {
 			return null;
 		}
 		Blog blog = new Blog();
-		blog.setAdmin(AdminFactory.create(userName, userPass));
-		blog.setIsAdmin(isAdmin);
-		blog.setUrl(url);
-		blog.setId(blogId);
-		blog.setName(blogName);
+		blog.setId(id);
+		blog.setName(name);
+		blog.setUrl(url);				
 		blog.setXmlrpcUrl(xmlrpcUrl);
 		return blog;
 	}
-
-	public static Blog create(String userName, String userPass, HashMap<String, Object> map) {
-		Boolean isAdmin = null;
+	
+	public static Blog createIfAdmin(HashMap<String, Object> map) {
 		String url = null; 
 		Integer blogId = null;
 		String blogName = null;
@@ -39,18 +35,21 @@ public class BlogFactory {
 			String key = (String) iterator.next();
 			if (key.equals(BLOG_NAME)) {
 				blogName = map.get(key).toString();
-			} else if(key.equals(XML_RPC)) {
+			} else if (key.equals(XML_RPC)) {
 				xmlrpcUrl = map.get(key).toString();
-			} else if(key.equals(BLOG_ID)) {
+			} else if (key.equals(BLOG_ID)) {
 				blogId = Integer.parseInt(map.get(key).toString());
-			} else if(key.equals(IS_ADMIN)) {
-				isAdmin = Boolean.parseBoolean(map.get(key).toString());
-			} else if(key.equals(URL)) {
+			} else if (key.equals(IS_ADMIN)) {
+				if (!Boolean.parseBoolean(map.get(key).toString())) {
+					return null;
+				}
+			} else if (key.equals(URL)) {
 				url = map.get(key).toString();
 			} else {
 				return null;
 			}
 		}
-		return BlogFactory.create(userName, userPass, isAdmin, url, blogId, blogName, xmlrpcUrl);
+		return BlogFactory.create(blogId, blogName, url, xmlrpcUrl);
 	}
+	
 }

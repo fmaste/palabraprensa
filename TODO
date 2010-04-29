@@ -1,5 +1,3 @@
-* Dado el nombre de un usuario, obtener todos sus videos/blogs.											OK
-
 * Dado un elemento (video o blog), obtener todos los comentarios desde tal fecha en adelante.
 	- No se puede filtrar por fecha. Lo que se hizo es poner todos los comentarios on hold
 	y traer solo aquellos que estan en ese estado. Luego, se pueden aceptar o rechazar los comentarios	OK

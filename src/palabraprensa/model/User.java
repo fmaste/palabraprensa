@@ -1,27 +1,26 @@
 package palabraprensa.model;
 
-public class Admin implements Credentials {
+public class User {
 	private String name;
-	private String pass;
-
-	@Override
+	private String password;
+	
+	public User() {		
+	}
+	
 	public String getName() {
 		return name;
 	}
 	
-	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	@Override
 	public String getPass() {
-		return pass;
+		return password;
 	}
 
-	@Override
 	public void setPass(String pass) {
-		this.pass = pass;
+		this.password = pass;
 	}
 
 }

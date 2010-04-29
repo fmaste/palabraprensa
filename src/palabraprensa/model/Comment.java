@@ -2,11 +2,10 @@ package palabraprensa.model;
 
 import java.util.Date;
 
-public class Comment {	
-	
+public class Comment {		
 	private Date dateCreated = null;	// (ISO.8601, always GMT)
 	private String userId = null;
-	private String commentId = null;
+	private String id = null;
 	private String parent = null;
 	private String status = null;
 	private String content = null;
@@ -37,12 +36,12 @@ public class Comment {
 		this.userId = userId;
 	}
 
-	public String getCommentId() {
-		return commentId;
+	public String getId() {
+		return id;
 	}
 
-	public void setCommentId(String commentId) {
-		this.commentId = commentId;
+	public void setId(String commentId) {
+		this.id = commentId;
 	}
 
 	public String getParent() {
@@ -125,14 +124,15 @@ public class Comment {
 		this.authorIp = authorIp;
 	}
 
-	@Override
-	public String toString() {
-		return "Comment [author=" + author + ", authorEmail=" + authorEmail
-				+ ", authorIp=" + authorIp + ", authorUrl=" + authorUrl
-				+ ", commentId=" + commentId + ", content=" + content
-				+ ", dateCreated=" + dateCreated + ", link=" + link
-				+ ", parent=" + parent + ", postId=" + postId + ", postTitle="
-				+ postTitle + ", status=" + status + ", userId=" + userId + "]";
+	public String toString(){
+		return "Comment[\n" +
+			"\t" + "Id:" 		+ " \"" + id		+ "\",\n" + 
+			"\t" + "UserId:" 	+ " \"" + userId	+ "\",\n" +
+			"\t" + "Author:" 	+ " \"" + author	+ "\",\n" +
+			"\t" + "Status:" 	+ " \"" + status	+ "\",\n" +
+			"\t" + "Content:" 	+ " \"" + content 	+ "\",\n" +
+			"\t" + "Url:"	 	+ " \"" + link 	+ "\",\n" +
+			"]";
 	}
 	
 }

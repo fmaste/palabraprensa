@@ -4,9 +4,7 @@ public class Blog {
 	private Integer id;
 	private String name;
 	private String url;
-	private String xmlrpcUrl;
-	private Admin admin;
-	private Boolean isAdmin;	
+	private String xmlrpcUrl;	
 			
 	public Integer getId() {
 		return id;
@@ -40,25 +38,13 @@ public class Blog {
 		this.xmlrpcUrl = xmlrpcUrl;
 	}
 	
-	public Admin getAdmin() {
-		return admin;
-	}
-	
-	public void setAdmin(Admin admin) {
-		this.admin = admin;
-	}
-	
-	public Boolean getIsAdmin() {
-		return isAdmin;
-	}
-	
-	public void setIsAdmin(Boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-	
 	public String toString(){
-		return "Blog ID: " + id + "\nBlog name: " + 
-			name + "\nURL: " + url + "\nXML-RPC URL: " + xmlrpcUrl + "\nIs Admin: " + isAdmin;
+		return "Blog[\n" +
+			"\t" + "Id:" 		+ " \"" + id		+ "\",\n" + 
+			"\t" + "Name:" 		+ " \"" + name 		+ "\",\n" +
+			"\t" + "URL:" 		+ " \"" + url 		+ "\",\n" + 
+			"\t" + "XML-RPC:" 	+ " \"" + xmlrpcUrl + "\",\n" +
+			"]";
 	}
 
 }

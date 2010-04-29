@@ -1,71 +1,86 @@
 package palabraprensa.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-
+import java.util.List;
 import palabraprensa.factory.CommentFactory;
-import palabraprensa.factory.RequestFactory;
 import palabraprensa.model.Blog;
 import palabraprensa.model.Comment;
-import palabraprensa.model.Request;
+import palabraprensa.model.User;
 import palabraprensa.model.constants.Wordpress;
+import palabraprensa.xmlrpc.Request;
 
 public class CommentDao {
+ 
+	public static List<Comment> getCommentsApproved(User user, Blog blog) throws Exception {		
+		return getComments(user, blog, "approve");
 
-	// Gets a comment, given it's comment ID. Note that this isn't in 2.6.1, but is in the HEAD (so should be in anything newer than 2.6.1) 
-	public static Comment[] getCommentsApproved(Blog blog) throws Exception {		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("status", "approve");
-		// Status defaults to approve
-		// If you don't provide a filter['number'] value then it will limit the response to 10
-		map.put("number", new Integer(200));
-		Object[] params = new Object[]{new Integer(blog.getId()), new String(blog.getAdmin().getName()), new String(blog.getAdmin().getPass()), map};
-		Request request = RequestFactory.create(Wordpress.GET_COMMENTS, params);		
-		return getComments(request);
 	}
 
-	public static Comment[] getCommentsOnHold(Blog blog) throws Exception {		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("status", "hold");
-		// If you don't provide a filter['number'] value then it will limit the response to 10
-		map.put("number", new Integer(200));
-		Object[] params = new Object[]{new Integer(blog.getId()), new String(blog.getAdmin().getName()), new String(blog.getAdmin().getPass()), map};
-		Request request = RequestFactory.create(Wordpress.GET_COMMENTS, params);		
-		return getComments(request);
+	public static List<Comment> getCommentsOnHold(User user, Blog blog) throws Exception {		
+		return getComments(user, blog, "hold");
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static Comment[] getComments(Request request) throws Exception {
-		Object[] results = RequestDao.makeRequest(request);		
-		Comment[] comments = new Comment[results.length];		
-		for (int index=0; index < results.length ; index ++) {
-			if (results[index] instanceof HashMap) {
-				HashMap<String, Object> map = (HashMap<String, Object>) results[index];
-				// Create a blog and add it to answer
-				comments[index] = CommentFactory.create(map);
-			}
+	private static List<Comment> getComments(User user, Blog blog, String statusFilter) throws Exception {
+		HashMap<String, Object> struct = new HashMap<String, Object>();
+		// For WordPress status defaults to approve
+		if (statusFilter != null && !statusFilter.isEmpty()) {
+			struct.put("status", statusFilter);
+		} else {
+			struct.put("status", ""); // FIXME: No key on the map or empty value ??
 		}
-		return comments;
+		// If you don't provide a filter['number'] value then it will limit the response to 10
+		struct.put("number", new Integer(200));
+		String method = Wordpress.GET_COMMENTS;
+		Object[] params = new Object[]{new Integer(blog.getId()), new String(user.getName()), new String(user.getPass()), struct};
+		Object result = Request.make(blog, method, params);
+		if (!(result instanceof Object[])) {
+			// TODO: Log!!!
+			return null;
+		}
+		Object[] comments = (Object[])result; 
+		List<Comment> ans = new ArrayList<Comment>();
+		for (int index = 0; index < comments.length ; index++) {
+			if (comments[index] instanceof HashMap<?,?>) {
+				HashMap<String, Object> map = (HashMap<String, Object>) comments[index];
+				Comment comment = CommentFactory.create(map);
+				if (comment != null) {
+					ans.add(comment);
+				}
+			} else {
+				// TODO: Log!!!
+			}
+			
+		}
+		return ans;
 	}
 
-	public static boolean setCommentApproved(Blog blog, Comment comment) throws Exception {
-		return editCommentStatus(blog, comment, "approve");
+	public static boolean setCommentApproved(User user, Blog blog, Comment comment) throws Exception {
+		return editCommentStatus(user, blog, comment, "approve");
 	}
 	
-	public static boolean setCommentSpam(Blog blog, Comment comment) throws Exception {
-		return editCommentStatus(blog, comment, "spam");
+	public static boolean setCommentSpam(User user, Blog blog, Comment comment) throws Exception {
+		return editCommentStatus(user, blog, comment, "spam");
 	}
 	
-	private static boolean editCommentStatus(Blog blog, Comment comment, String status) throws Exception {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("status", status);
-		map.put("date_created_gmt", comment.getDateCreated());
-		map.put("content", comment.getContent());
-		map.put("author", comment.getAuthor());
-		map.put("author_url", comment.getAuthorUrl());
-		map.put("author_email", comment.getAuthorEmail());
-		Object[] params = new Object[]{new Integer(blog.getId()), new String(blog.getAdmin().getName()), new String(blog.getAdmin().getPass()),new Integer(comment.getCommentId()), map};
-		Request request = RequestFactory.create(Wordpress.EDIT_COMMENT, params);		
-		return RequestDao.makeBooleanRequest(request);
+	private static boolean editCommentStatus(User user, Blog blog, Comment comment, String status) throws Exception {
+		HashMap<String, Object> struct = new HashMap<String, Object>();
+		struct.put("status", status);
+		struct.put("date_created_gmt", comment.getDateCreated());
+		struct.put("content", comment.getContent());
+		struct.put("author", comment.getAuthor());
+		struct.put("author_url", comment.getAuthorUrl());
+		struct.put("author_email", comment.getAuthorEmail());
+		String method = Wordpress.EDIT_COMMENT;
+		Object[] params = new Object[]{new Integer(blog.getId()), new String(user.getName()), new String(user.getPass()),new Integer(comment.getId()), struct};		
+		Object ans = Request.make(blog, method, params);		
+		if (ans instanceof Boolean) {
+			return (Boolean)ans;
+		} else {
+			// TODO: LOG!
+			return false;
+		}
 	}
 	
 }

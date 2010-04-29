@@ -37,7 +37,7 @@ public class CommentFactory {
 		Comment comment = new Comment();
 		comment.setUserId(userId);
 		comment.setDateCreated(dateCreated);
-		comment.setCommentId(commentId);
+		comment.setId(commentId);
 		comment.setParent(parent);
 		comment.setStatus(status);
 		comment.setContent(content);
