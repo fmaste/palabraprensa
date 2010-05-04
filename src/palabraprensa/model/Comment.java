@@ -3,9 +3,9 @@ package palabraprensa.model;
 import java.util.Date;
 
 public class Comment {		
+	private Long id = null;
 	private Date dateCreated = null;	// (ISO.8601, always GMT)
-	private String userId = null;
-	private String id = null;
+	private String userId = null;	
 	private String parent = null;
 	private String status = null;
 	private String content = null;
@@ -16,6 +16,14 @@ public class Comment {
 	private String authorUrl = null;
 	private String authorEmail = null;
 	private String authorIp = null;
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
 	
 	public Comment() {
 	}
@@ -34,14 +42,6 @@ public class Comment {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String commentId) {
-		this.id = commentId;
 	}
 
 	public String getParent() {

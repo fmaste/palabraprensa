@@ -1,16 +1,16 @@
 package palabraprensa.model;
 
 public class Blog {	
-	private Integer id;
+	private Long id;
 	private String name;
 	private String url;
 	private String xmlrpcUrl;	
 			
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 	
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	

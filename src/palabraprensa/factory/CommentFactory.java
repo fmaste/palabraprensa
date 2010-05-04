@@ -1,30 +1,29 @@
 package palabraprensa.factory;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-
+import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import palabraprensa.model.Comment;
 
-
 public class CommentFactory {
-	
+	private static final Logger logger = LoggerFactory.getLogger(CommentFactory.class);
 	private static final String COMMENT_ID = "comment_id";
-	private static final String STATUS = "status";
-	private static final String LINK = "link";
-	private static final String AUTHOR_URL = "author_url";
 	private static final String PARENT = "parent";
-	private static final String TYPE = "type";
 	private static final String POST_ID = "post_id";
-	private static final String AUTHOR_IP = "author_ip";
+	private static final String POST_TITLE = "post_title";
+	private static final String STATUS = "status";
+	private static final String TYPE = "type";
+	private static final String LINK = "link";
 	private static final String CONTENT = "content";
+	private static final String USER_ID = "user_id";
 	private static final String AUTHOR = "author";
 	private static final String AUTHOR_EMAIL = "author_email";
+	private static final String AUTHOR_URL = "author_url";
+	private static final String AUTHOR_IP = "author_ip";
 	private static final String DATE_CREATED = "date_created_gmt";
-	private static final String USER_ID = "user_id";
-	private static final String POST_TITLE = "post_title";
-
-	public static Comment create (Date dateCreated, String userId, String commentId, String parent,
+	
+	public static Comment create (Date dateCreated, String userId, Long commentId, String parent,
 			String status, String content, String link, String postId, String postTitle, String author,
 			String authorUrl, String authorEmail, String authorIp) {
 		
@@ -51,12 +50,11 @@ public class CommentFactory {
 		return comment;
 	}
 
-	public static Comment create(HashMap<String, Object> map) {
-		
-		Date dateCreated = null;	// (ISO.8601, always GMT)
-		String userId = null;
-		String commentId = null;
+	public static Comment create(Map<String, Object> map) {		
+		Long id = null;
 		String parent = null;
+		Date dateCreated = null;	// (ISO.8601, always GMT)
+		String userId = null;		
 		String status = null;
 		String content = null;
 		String link = null;
@@ -66,13 +64,9 @@ public class CommentFactory {
 		String authorUrl = null;
 		String authorEmail = null;
 		String authorIp = null;
-			
-		Iterator<String> iterator = map.keySet().iterator();
-		while (iterator.hasNext()) {
-			String key = (String) iterator.next();
-
+		for (String key : map.keySet()) {			
 			if (key.equals(COMMENT_ID)) {
-				commentId = map.get(key).toString();
+				id = Long.parseLong(map.get(key).toString());
 			} else if(key.equals(STATUS)) {
 				status = map.get(key).toString();
 			} else if(key.equals(LINK)) {
@@ -103,7 +97,7 @@ public class CommentFactory {
 				return null;
 			}
 		}
-		return CommentFactory.create(dateCreated, userId, commentId, parent,
+		return CommentFactory.create(dateCreated, userId, id, parent,
 				status, content, link, postId, postTitle, author,
 				authorUrl, authorEmail, authorIp);
 	}

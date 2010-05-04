@@ -19,7 +19,7 @@ public class Main {
 		user.setName(WP_USER_NAME);
 		user.setPass(WP_PASS_PASS);
 		// Get the blogs where the user is admin				
-		List<Blog> blogs = BlogDao.getBlogsOwned(user);
+		List<Blog> blogs = BlogDao.getBlogs("http://wordpress.com", user);
 		if (blogs == null || blogs.isEmpty()) {
 			System.out.println("User has no blogs!");
 		} else {
@@ -37,7 +37,7 @@ public class Main {
 	}
 	
 	public static void moderateBlog(User user, Blog blog) throws Exception {
-		List<Comment> comments = CommentDao.getCommentsApproved(user, blog);
+		List<Comment> comments = CommentDao.getCommentsOnHold(user, blog);
 		for(Comment comment : comments) {
 			if (comment != null) {
 				System.out.println("THIS MESSAGE SHOULD BE SENT TO KEEPCON PLATFORM:");
