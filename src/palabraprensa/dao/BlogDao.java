@@ -52,7 +52,7 @@ public class BlogDao {
 		return ans;
 	}
 	
-	public static Map<String,Blog> getBlogsByName(String wordpressRoot, User user) throws Exception {
+	public static Map<String,Blog> getBlogsByTitle(String wordpressRoot, User user) throws Exception {
 		List<Blog> blogs = getBlogs(wordpressRoot, user);
 		Map<String, Blog> ans = new HashMap<String, Blog>();
 		for (Blog blog : blogs) {
