@@ -20,7 +20,7 @@ public class CommentDao {
 		return getComments(user, blog, "approve", null, null);
 	}
 
-	public static List<Comment> getCommentsApproved(User user, Blog blog, String offset, String number) throws Exception {		
+	public static List<Comment> getCommentsApproved(User user, Blog blog, Integer offset, Integer number) throws Exception {		
 		return getComments(user, blog, "approve", offset, number);
 	}
 	
@@ -28,12 +28,12 @@ public class CommentDao {
 		return getComments(user, blog, "hold", null, null);
 	}
 	
-	public static List<Comment> getCommentsOnHold(User user, Blog blog, String offset, String number) throws Exception {		
+	public static List<Comment> getCommentsOnHold(User user, Blog blog, Integer offset, Integer number) throws Exception {		
 		return getComments(user, blog, "hold", offset, number);
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static List<Comment> getComments(User user, Blog blog, String statusFilter, String offset, String number) throws Exception {
+	private static List<Comment> getComments(User user, Blog blog, String statusFilter, Integer offset, Integer number) throws Exception {
 		if (user == null || user.getName() == null || user.getName().isEmpty() || user.getPass() == null || user.getPass().isEmpty()) {
 			logger.error("Invalid user. A name and a password is required.");
 			return null;
@@ -42,16 +42,16 @@ public class CommentDao {
 			logger.error("Invalid blog. An id and a xmlrpc url is required.");
 			return null;
 		}
-		logger.debug("Get comments for user: \"" + user.getName() + "\", blog: \"" + blog.getName() + "\".");
+		logger.debug("Get comments for user: \"" + user.getName() + "\", blog: \"" + blog.getTitle() + "\".");
 		Map<String, Object> struct = new HashMap<String, Object>();
 		// For WordPress status defaults to approve
 		if (statusFilter != null && !statusFilter.isEmpty()) {
 			struct.put("status", statusFilter);
 		}
-		if (offset != null && !offset.isEmpty()) {
+		if (offset != null && offset >= 0) {
 			struct.put("offset", offset);
 		}
-		if (number != null && !number.isEmpty()) {
+		if (number != null && number >= 1) {
 			struct.put("number", number);
 		}
 		// If you don't provide a filter['number'] value then it will limit the response to 10
@@ -101,6 +101,10 @@ public class CommentDao {
 			logger.error("Invalid comment. An id is required.");
 			return false;
 		}
+		if (comment.getStatus() != null && !comment.getStatus().isEmpty() && comment.getStatus().equalsIgnoreCase(status)) {
+			logger.info("Comment " + comment.getId() + " already on state " + status);
+			return true;
+		}
 		logger.debug("Edit comment: " + comment.getId() + " (" + comment.getContent()+ ")");
 		Map<String, Object> struct = new HashMap<String, Object>();
 		struct.put("status", status);
@@ -134,7 +138,7 @@ public class CommentDao {
 			return false;
 		}
 		logger.debug("Delete comment: " + comment.getId() + " (" + comment.getContent()+ ")");
-		String method = Wordpress.EDIT_COMMENT;
+		String method = Wordpress.DELETE_COMMENT;
 		Object[] params = new Object[]{new String(blog.getId().toString()), new String(user.getName()), new String(user.getPass()), new String(comment.getId().toString())};		
 		Object ans = Request.make(blog, method, params);		
 		if (ans instanceof Boolean) {

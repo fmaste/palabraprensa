@@ -127,11 +127,12 @@ public class Comment {
 	public String toString(){
 		return "Comment[\n" +
 			"\t" + "Id:" 		+ " \"" + id		+ "\",\n" + 
+			"\t" + "dateCreated:" 		+ " \"" + dateCreated	+ "\",\n" +
 			"\t" + "UserId:" 	+ " \"" + userId	+ "\",\n" +
 			"\t" + "Author:" 	+ " \"" + author	+ "\",\n" +
 			"\t" + "Status:" 	+ " \"" + status	+ "\",\n" +
 			"\t" + "Content:" 	+ " \"" + content 	+ "\",\n" +
-			"\t" + "Url:"	 	+ " \"" + link 	+ "\",\n" +
+			"\t" + "Url:"	 	+ " \"" + link 		+ "\",\n" +
 			"]";
 	}
 	

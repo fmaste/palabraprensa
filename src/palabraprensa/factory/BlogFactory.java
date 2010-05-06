@@ -7,7 +7,7 @@ import palabraprensa.model.Blog;
 
 public class BlogFactory {
 	private static final Logger logger = LoggerFactory.getLogger(BlogFactory.class);
-	private static final String BLOG_NAME = "blogName";
+	private static final String BLOG_TITLE = "blogName";
 	private static final String XML_RPC = "xmlrpc";
 	private static final String BLOG_ID = "blogid";
 	private static final String IS_ADMIN = "isAdmin";
@@ -21,7 +21,7 @@ public class BlogFactory {
 		}
 		Blog blog = new Blog();
 		blog.setId(id);
-		blog.setName(name);
+		blog.setTitle(name);
 		blog.setUrl(url);
 		blog.setXmlrpcUrl(xmlrpcUrl);
 		return blog;
@@ -33,7 +33,7 @@ public class BlogFactory {
 		String url = null; 
 		String xmlrpcUrl = null;		
 		for (String key : map.keySet()) {
-			if (key.equals(BLOG_NAME)) {
+			if (key.equals(BLOG_TITLE)) {
 				name = map.get(key).toString();
 			} else if (key.equals(XML_RPC)) {
 				xmlrpcUrl = map.get(key).toString();

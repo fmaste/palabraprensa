@@ -1,0 +1,25 @@
+ROLES (http://en.support.wordpress.com/user-roles/)
+The minimun role to moderate comments is Editor. 
+The other role with this ability is Administrator, but only one per blog is recommended.
+Also, it won't be nice for the clients to add an extra administrator.
+
+PERMISSIONS
+The API can't check if you have sufficient privileges!
+Be sure that you are trying to moderate being admin or editor.
+If you don't have sufficient privileges an exception is thrown.
+
+URL (Usage with your custom wordpress installations)
+Your XML-RPC server/path are as described here:
+    * If your WordPress root is http://example.com/wordpress/, then you have:
+          o Server: http://example.com/ (some tools will just want the 'example.com' hostname part)
+          o Path: /wordpress/xmlrpc.php
+          o complete URL (just in case): http://example.com/wordpress/xmlrpc.php 
+
+Comments set as spam are moved to the spam sections of Wordpress backoffice.
+Comments deleted are moved to the trash sections of Wordpress backoffice.
+
+Pre and post moderation
+Go to: Settings->Discussions->Before a comment appears
+Check or uncheck this:  "An administrator must always approve the comment"
+
+Dates must be in GMT/UTC to coordinate with Wordpress servers.

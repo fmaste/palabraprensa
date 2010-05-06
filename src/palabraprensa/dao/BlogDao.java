@@ -1,6 +1,7 @@
 package palabraprensa.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 import org.slf4j.Logger;
@@ -47,6 +48,24 @@ public class BlogDao {
 			} else {
 				logger.error("An invalid blog was fetched and will be ignored.");
 			}
+		}
+		return ans;
+	}
+	
+	public static Map<String,Blog> getBlogsByName(String wordpressRoot, User user) throws Exception {
+		List<Blog> blogs = getBlogs(wordpressRoot, user);
+		Map<String, Blog> ans = new HashMap<String, Blog>();
+		for (Blog blog : blogs) {
+			ans.put(blog.getTitle(), blog);
+		}
+		return ans;
+	}
+
+	public static Map<String,Blog> getBlogsByUrl(String wordpressRoot, User user) throws Exception {
+		List<Blog> blogs = getBlogs(wordpressRoot, user);
+		Map<String, Blog> ans = new HashMap<String, Blog>();
+		for (Blog blog : blogs) {
+			ans.put(blog.getUrl(), blog);
 		}
 		return ans;
 	}

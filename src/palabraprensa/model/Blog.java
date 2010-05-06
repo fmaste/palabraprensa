@@ -2,7 +2,7 @@ package palabraprensa.model;
 
 public class Blog {	
 	private Long id;
-	private String name;
+	private String title;
 	private String url;
 	private String xmlrpcUrl;	
 			
@@ -14,12 +14,12 @@ public class Blog {
 		this.id = id;
 	}
 	
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
 	public String getUrl() {
@@ -41,7 +41,7 @@ public class Blog {
 	public String toString(){
 		return "Blog[\n" +
 			"\t" + "Id:" 		+ " \"" + id		+ "\",\n" + 
-			"\t" + "Name:" 		+ " \"" + name 		+ "\",\n" +
+			"\t" + "Title:"		+ " \"" + title 		+ "\",\n" +
 			"\t" + "URL:" 		+ " \"" + url 		+ "\",\n" + 
 			"\t" + "XML-RPC:" 	+ " \"" + xmlrpcUrl + "\",\n" +
 			"]";
