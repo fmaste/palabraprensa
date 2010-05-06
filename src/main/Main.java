@@ -1,7 +1,8 @@
-package palabraprensa.api;
+package main;
 
 import java.util.Date;
 import java.util.List;
+import palabraprensa.api.Moderator;
 import palabraprensa.model.Comment;
 
 public class Main {
