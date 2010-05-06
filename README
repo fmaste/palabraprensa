@@ -1,7 +1,11 @@
+For blogs that are hosted on Wordpress.com, you need to create an account there.
+For custom Wordpress installations, create an account there or ask the admin to create one for you.
+
 ROLES (http://en.support.wordpress.com/user-roles/)
-The minimun role to moderate comments is Editor. 
+The minimun role to moderate comments is Editor.
 The other role with this ability is Administrator, but only one per blog is recommended.
 Also, it won't be nice for the clients to add an extra administrator.
+The blog's admin needs to add your user as an editor of the blog.
 
 PERMISSIONS
 The API can't check if you have sufficient privileges!
