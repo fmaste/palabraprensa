@@ -1,3 +1,9 @@
+A Java SDK for WordPress.
+
+A client needed to add WordPress support to his content moderation platform, with both pre and post moderation.
+
+--------------------------------------------------------------------------------
+
 For blogs that are hosted on Wordpress.com, you need to create an account there.
 For custom Wordpress installations, create an account there or ask the admin to create one for you.
 
